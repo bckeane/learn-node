@@ -1,30 +1,25 @@
-////import the http module
-//var http = require('http');
-
-//handle sendng requests and returning responses
-//function handleRequests(req,res) {
-//	res.end('Hello World');  //return string
-//}
-
-//create server
-//var server = http.createServer(handleRequests);
-
-//start server and listen on port x
-//server.listen(8080,function(){
-//	console.log('Listening on port 8080');
-//});
-
-/////////////////////express
-
+//require
 var express = require('express');
+var expressLayouts = require('express-ejs-layouts')
+
+//setups
 var app = express();
 var port = 8080;
+
+//use ejs layouts
+app.set('view engine','ejs');
+app.use(expressLayouts);
+
+//route the app
+var router = require('./app/routes.js');
+app.use('/',router);
+
+
+//static folder setup for img and css
+app.use(express.static(__dirname + '/public'));
+
 
 app.listen(port, function(){
 	console.log('app started');
 });
 
-//route the app
-app.get('/', function (req,res) {
-	res.send('Hello World again');
-});
